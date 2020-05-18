@@ -116,4 +116,46 @@ export default function form() {
             })
             .catch(err => console.log(err.response));
     };
-}
+
+    const sent = (e) => {
+        e.preventDefault();
+        alert("Order Sent Thanks for the Purchase")
+    }
+
+    //returning the form
+    return(
+        <form onSubmit={formSubmit}>
+            <label htmlFor="name">
+                Customer's Name
+                <br />
+                <input
+                    type="text"
+                    name="name"
+                    id="nameinput"
+                    placeholder="Name"
+                    value={formState.name}
+                    onChangg={inputChange}
+                />
+                {errors.name.length > 5? <p className="error">{errors.name}</p> : null}
+
+            </label>
+            <br />
+
+            <label htmlFor='size'>
+                Choice of size
+                <br />
+                <select name='size' id='sizeinput' onChange={inputChange}>
+                    <option name='default' value={null}></option>
+                    <option name='Sm' value='small'>Small</option>
+                    <option name='Md' value='medium'>Medium</option>
+                    <option name='Lg' value='large'>Large</option>
+                    <option name='XL' value='extraL'>Extra Large</option>
+                </select>
+            </label>
+            <br />
+
+            <div className='toppingsCheckList'>
+                
+            </div>
+        </form>
+    )
