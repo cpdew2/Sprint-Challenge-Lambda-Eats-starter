@@ -241,6 +241,9 @@ export default function form() {
                 </label>
                 <br />
 
+                </div>
+                <br />
+
                 <label htmlFor='Special Instructions'>
                     Special Instructions
                     <br /><br />
@@ -256,7 +259,7 @@ export default function form() {
                 <br />
                 <button name='submit' onSubmit={sent} disabled={buttonDisabled}>Submit</button>
                 <pre>{JSON.stringify(post, null, 2)}</pre>
-            </div>
+            
         </form>
     )
 
