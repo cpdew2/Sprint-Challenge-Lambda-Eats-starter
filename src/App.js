@@ -16,10 +16,20 @@ function App () {
           <button name='homebutton'>Home</button>
         </Link>
 
+      <br />       
+      <Link to="/form">
+        <button name='orderbutton'>Order</button>
+      </Link>
       </nav>
-      <h1>Lambda Eats</h1>
-      <p>You can remove this code and create your own header</p>
-    </>
+      <div className="App-header">
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/form" component={Form} />
+        </Switch>
+      </div>
+      </Router>
+  
   );
 };
+
 export default App;
