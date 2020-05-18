@@ -155,7 +155,109 @@ export default function form() {
             <br />
 
             <div className='toppingsCheckList'>
-                
+                <p>Select Toppings</p>
+
+                <label htmlFor='pepperoni'>
+                    <input
+                    type='checkbox'
+                    name='pepperoni'
+                    id='pepperoniCheckBox'
+                    checked={formState.pepperoni}
+                    onChange={inputChange}
+                    />
+                    Pepperoni
+                </label>
+                <br />
+
+                <label htmlFor='beef'>
+                    <input
+                    type='checkbox'
+                    name='beef'
+                    id='beefCheckBox'
+                    checked={formState.beef}
+                    onChange={inputChange}
+                    />
+                    Beef
+                </label>
+                <br />
+
+                <label htmlFor='sausage'>
+                    <input
+                    type='checkbox'
+                    name='sausage'
+                    id='sausageCheckBox'
+                    checked={formState.sausage}
+                    onChange={inputChange}
+                    />
+                    Sausage
+                </label>
+                <br />
+
+                <label htmlFor='blackolives'>
+                    <input
+                    type='checkbox'
+                    name='blackolives'
+                    id='blackolivesCheckBox'
+                    checked={formState.blackolives}
+                    onChange={inputChange}
+                    />
+                    Black Olives
+                </label>
+                <br />
+
+                <label htmlFor='pineapple'>
+                    <input
+                    type='checkbox'
+                    name='pineapple'
+                    id='pineappleCheckBox'
+                    checked={formState.pineapple}
+                    onChange={inputChange}
+                    />
+                    Pineapple
+                </label>
+                <br />
+
+                <label htmlFor='peppers'>
+                    <input
+                    type='checkbox'
+                    name='peppers'
+                    id='peppersCheckBox'
+                    checked={formState.peppers}
+                    onChange={inputChange}
+                    />
+                    Peppers
+                </label>
+                <br />
+
+                <label htmlFor='echeese'>
+                    <input
+                    type='checkbox'
+                    name='echeese'
+                    id='echeeseCheckBox'
+                    checked={formState.echeese}
+                    onChange={inputChange}
+                    />
+                    Extra Cheese
+                </label>
+                <br />
+
+                <label htmlFor='Special Instructions'>
+                    Special Instructions
+                    <br /><br />
+                    <textarea
+                        name='specInstructions'
+                        id='specInstructionsInput'
+                        placeholder='Extra Requirements...'
+                        value={formState.specInstructions}
+                        onChange={inputChange}
+                    />
+                    
+                </label>
+                <br />
+                <button name='submit' onSubmit={sent} disabled={buttonDisabled}>Submit</button>
+                <pre>{JSON.stringify(post, null, 2)}</pre>
             </div>
         </form>
     )
+
+    
