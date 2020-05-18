@@ -120,10 +120,10 @@ export default function form() {
     const sent = (e) => {
         e.preventDefault();
         alert("Order Sent Thanks for the Purchase")
-    }
+    
 
     //returning the form
-    return(
+    return (
         <form onSubmit={formSubmit}>
             <label htmlFor="name">
                 Customer's Name
@@ -263,4 +263,4 @@ export default function form() {
         </form>
     )
 
-    
+}
