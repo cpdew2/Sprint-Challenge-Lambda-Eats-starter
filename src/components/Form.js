@@ -76,7 +76,44 @@ export default function form() {
 
     //validate changes
     const validateChange =e => {
-        
-    }
-    
+        yup
+            .reach(formSchema, e.target.name)
+            .validate(e.target.value)
+            .then(valid => {
+                setErrors({
+                    ...errors,
+                    [e.target.name]: ""
+                });
+            })
+            .catch(err => {
+                setErrors({
+                    ...errors,
+                    [e.target.name]: err.errors[0]
+                });
+            });
+    };
+    // the send button 
+    const formSubmit = e => {
+        e.preventDefault();
+        axios
+            .post("https://reqres.in/api/users?page=2", formState)
+            .then(res => {
+                setPost(res.data);
+                console.log("success", post);
+                console.log(res.data.size)
+                setFormState({
+                  name: "",
+                  size: res.data.size,
+                  pepperoni: false,
+                  beef: false,
+                  sausage: false,
+                  blackolives: false,
+                  pineapple: false,
+                  peppers: false,
+                  echeese: false,
+                  specInstructions: ""  
+                });
+            })
+            .catch(err => console.log(err.response));
+    };
 }
