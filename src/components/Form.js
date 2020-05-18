@@ -48,4 +48,35 @@ export default function form() {
     })
 
     //useState for button
+    const [buttonDisabled, setButtonDisabled] = useState(false);
+
+    //useState post
+    const [post, setPost] = useState([]);
+
+    //inputchange
+
+    const inputChange = e => {
+        e.persist();
+        const newFormDate = {
+            ...formState, [e.target.name]:
+            e.target.type ==="checkbox" ? 
+            e.target.checked : e.target.value};
+        };
+
+        validateChange(e);
+        setFormState(newFormData);
+    };
+
+    //button
+    useEffect(() => {
+        formSchema.isValid(formState).then(valid => {
+            setButtonDisabled(!valid);
+        });
+    }, [formState]);
+
+    //validate changes
+    const validateChange =e => {
+        
+    }
+    
 }
