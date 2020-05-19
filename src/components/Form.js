@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as yup from "yup";
 import axios from 'axios';
-import './styles/form.css'
+
 
 //use of yup - schema
 const formSchema = yup.object().shape({
@@ -110,7 +110,7 @@ export default function Form() {
               echeese: "",
               specInstructions: ""  
             });
-            setServerError(null);
+            serverError(null);
         })
         .catch(error => {
             setServerError("something went wrong!");
@@ -152,9 +152,9 @@ export default function Form() {
                     onChange={inputChange}
                 />
                 {errors.name.length > 0 ? <p className="error">{errors.name}</p> : null}
-
+                <br />
             </label>
-           
+            <br />
 
             <label htmlFor='size'>
                 Choice of size
@@ -182,7 +182,7 @@ export default function Form() {
                     />
                     Pepperoni
                 </label>
-                
+                <br />
 
                 <label htmlFor='beef'>
                     <input
@@ -195,7 +195,7 @@ export default function Form() {
                     Beef
                 </label>
                 
-
+                <br />
                 <label htmlFor='sausage'>
                     <input
                     type='checkbox'
@@ -207,7 +207,7 @@ export default function Form() {
                     Sausage
                 </label>
                 
-
+                <br />
                 <label htmlFor='blackolives'>
                     <input
                     type='checkbox'
@@ -218,7 +218,7 @@ export default function Form() {
                     />
                     Black Olives
                 </label>
-                
+                <br />
 
                 <label htmlFor='pineapple'>
                     <input
@@ -231,7 +231,7 @@ export default function Form() {
                     Pineapple
                 </label>
                
-
+                <br />
                 <label htmlFor='peppers'>
                     <input
                     type='checkbox'
@@ -243,7 +243,7 @@ export default function Form() {
                     Peppers
                 </label>
                 
-
+                <br />
                 <label htmlFor='echeese'>
                     <input
                     type='checkbox'
@@ -256,9 +256,10 @@ export default function Form() {
                 </label>
                         
                 </div>
-                                      
+                <br />                    
                 <label htmlFor='Special Instructions'>
                     Special Instructions
+                    <br />
                     <textarea
                         name='specInstructions'
                         id='specInstructionsInput'
@@ -268,9 +269,9 @@ export default function Form() {
                     />
                   
                 </label>
-                
+                <br />
                 <button name='submit' onSubmit={post} disabled={isButtonDisabled}>Submit</button>
-                <pre>{JSON.stringify(post, null, 2)}</pre>
+                <pre>{JSON.stringify(post, 'https://localhost.3000', 2)}</pre>
                
         </form>
     )
