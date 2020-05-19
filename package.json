@@ -35,6 +35,7 @@
     ]
   },
   "devDependencies": {
+    "cypress": "^4.5.0",
     "yup": "^0.28.5"
   }
 }
