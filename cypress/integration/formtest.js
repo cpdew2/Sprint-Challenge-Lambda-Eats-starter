@@ -1,9 +1,13 @@
 beforeEach(function () {
-    cy.visit('http://localhost:3000');
+    cy.visit('http://localhost:3000/');
 })
 describe('Test the form inputs', function () {
     it('adds text to name field', function() {
-         cy.get('[type="checkbox"]')
+        cy.get('size')
+        .select(MD)
+        .should('have.value', 'Md')
+
+        cy.get('[type="checkbox"]')
         .check()
         .should('be.checked')
 
