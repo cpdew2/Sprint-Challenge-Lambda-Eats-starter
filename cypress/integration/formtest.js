@@ -18,5 +18,6 @@ describe('Test the form inputs', function () {
 
         cy.contains('Submit')
         .click({force: true});
+        
     });
 });
