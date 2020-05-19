@@ -10,7 +10,9 @@ function App () {
   return (
 
     <Router>
+      <div className="App">
 
+      </div>
       <nav className="navbar">
         <Link to="/">
           <button name='homebutton'>Home</button>
@@ -25,6 +27,11 @@ function App () {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/form" component={Form} />
+          <Route path="/pizza"
+          render={props => {
+            return null
+          }}
+          />
         </Switch>
       </div>
       </Router>

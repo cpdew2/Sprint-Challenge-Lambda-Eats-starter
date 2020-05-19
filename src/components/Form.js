@@ -1,38 +1,53 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import * as yup from "yup";
+import axios from 'axios';
+import './styles/form.css'
 
 //use of yup - schema
 const formSchema = yup.object().shape({
     name: yup.string().required("Name is a required field."),
     size: yup.string().required("Must selet a size"),
-    pepperoni: yup.boolean().defined(),
-    beef: yup.boolean().defined(),
-    sausage: yup.boolean().defined(),
-    blackolives: yup.boolean().defined(),
-    pineapple: yup.boolean().defined(),
-    peppers: yup.boolean().defined(),
-    extracheese: yup.boolean().defined(),
+    pepperoni: yup.string().defined(),
+    beef: yup.string().defined(),
+    sausage: yup.string().defined(),
+    blackolives: yup.string().defined(),
+    pineapple: yup.string().defined(),
+    peppers: yup.string().defined(),
+    extracheese: yup.string().defined(),
     specInstructions: yup.string().notRequired()
 });
 
-export default function form() {
+export default function Form() {
     //adding state
 
-    const [formState, setFormState] = useState({
+    //const [forms, setForms] = useState({
+    const initialFormState ={
         name: "",
         size: "",
-        pepperoni: false,
-        beef: false,
-        sausage: false,
-        blackolives: false,
-        pineapple: false,
-        peppers: false,
-        extracheese: false,
-        specInstructions: ""
-    })
+        pepperoni: "",
+        beef: "",
+        sausage: "",
+        blackolives: "",
+        pineapple: "",
+        peppers: "",
+        extracheese: "",
+        specInstructions: "",
+    };
 
     // errors
+
+   
+
+    //useState for button
+    
+
+    const [serverError, setServerError] = useState("");
+
+    const [post, setPost] = useState([]);
+
+    const [formState, setFormState] = useState(initialFormState);
+
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
     const [errors, setErrors] = useState({
         name: "",
@@ -45,105 +60,105 @@ export default function form() {
         peppers: "",
         extracheese: "",
         specInstructions: "",
-    })
+    });
 
-    //useState for button
-    const [buttonDisabled, setButtonDisabled] = useState(false);
 
-    //useState post
-    const [post, setPost] = useState([]);
-
-    //inputchange
-
-    const inputChange = e => {
-        e.persist();
-        const newFormDate = {
-            ...formState, [e.target.name]:
-            e.target.type ==="checkbox" ? 
-            e.target.checked : e.target.value};
-        };
-
-        validateChange(e);
-        setFormState(newFormData);
-    };
-
-    //button
-    useEffect(() => {
-        formSchema.isValid(formState).then(valid => {
-            setButtonDisabled(!valid);
-        });
-    }, [formState]);
-
-    //validate changes
-    const validateChange =e => {
+    const validateChange = e => {
         yup
-            .reach(formSchema, e.target.name)
+           .reach(formSchema, e.target.name)
             .validate(e.target.value)
             .then(valid => {
                 setErrors({
                     ...errors,
-                    [e.target.name]: ""
-                });
+                    [e.target.name]:""
+                })
             })
-            .catch(err => {
+            .catch(errors => {
                 setErrors({
                     ...errors,
-                    [e.target.name]: err.errors[0]
+                    [e.target.name]:errors.errors[0]
                 });
+           });
+   };
+
+   useEffect(() => {
+    formSchema.isValid(formState).then(valid => {
+        console.log('valid?', valid);
+        setIsButtonDisabled(!valid);
+     });
+ }, [formState]);
+
+
+ const formSubmit = e => {
+    e.preventDefault();
+    console.log('form submitted!');
+    axios
+        .post("https://reqres.in/api/users", formState)
+        .then(response => {
+            setPost(response.data);
+           console.log("success", post);
+           console.log(response.data.size)
+            setFormState({
+              name: "",
+              size: response.data.size,
+              pepperoni: "",
+              beef: "",
+              sausage: "",
+              blackolives: "",
+              pineapple: "",
+              peppers: "",
+              echeese: "",
+              specInstructions: ""  
             });
-    };
-    // the send button 
-    const formSubmit = e => {
-        e.preventDefault();
-        axios
-            .post("https://reqres.in/api/users?page=2", formState)
-            .then(res => {
-                setPost(res.data);
-                console.log("success", post);
-                console.log(res.data.size)
-                setFormState({
-                  name: "",
-                  size: res.data.size,
-                  pepperoni: false,
-                  beef: false,
-                  sausage: false,
-                  blackolives: false,
-                  pineapple: false,
-                  peppers: false,
-                  echeese: false,
-                  specInstructions: ""  
-                });
-            })
-            .catch(err => console.log(err.response));
+            setServerError(null);
+        })
+        .catch(error => {
+            setServerError("something went wrong!");
+});
+ };
+    //inputchange
+
+        const inputChange = e => {
+         e.persist();
+
+    const newFormData = {
+        ...formState, [e.target.name]: e.target.type === "checkbox" ?
+        e.target.checked: e.target.value };
+        
+      validateChange(e);
+      setFormState(newFormData);
+      console.log(e.target.name.howmany)
     };
 
-    const sent = (e) => {
-        e.preventDefault();
-        alert("Order Sent Thanks for the Purchase")
     
-
+     
+    
     //returning the form
     return (
-        <form onSubmit={formSubmit}>
+        <form
+        onSubmit={(e) => {
+          e.preventDefault();
+         alert("Order Sent Thanks for the Purchase")
+        }}>
             <label htmlFor="name">
                 Customer's Name
-                <br />
+            
                 <input
                     type="text"
                     name="name"
                     id="nameinput"
                     placeholder="Name"
                     value={formState.name}
-                    onChangg={inputChange}
+                    onChange={inputChange}
                 />
-                {errors.name.length > 5? <p className="error">{errors.name}</p> : null}
+                {errors.name.length > 0 ? <p className="error">{errors.name}</p> : null}
 
             </label>
-            <br />
+           
 
             <label htmlFor='size'>
                 Choice of size
-                <br />
+                
                 <select name='size' id='sizeinput' onChange={inputChange}>
                     <option name='default' value={null}></option>
                     <option name='Sm' value='small'>Small</option>
@@ -152,8 +167,8 @@ export default function form() {
                     <option name='XL' value='extraL'>Extra Large</option>
                 </select>
             </label>
-            <br />
-
+            
+        
             <div className='toppingsCheckList'>
                 <p>Select Toppings</p>
 
@@ -167,7 +182,7 @@ export default function form() {
                     />
                     Pepperoni
                 </label>
-                <br />
+                
 
                 <label htmlFor='beef'>
                     <input
@@ -179,7 +194,7 @@ export default function form() {
                     />
                     Beef
                 </label>
-                <br />
+                
 
                 <label htmlFor='sausage'>
                     <input
@@ -191,7 +206,7 @@ export default function form() {
                     />
                     Sausage
                 </label>
-                <br />
+                
 
                 <label htmlFor='blackolives'>
                     <input
@@ -203,7 +218,7 @@ export default function form() {
                     />
                     Black Olives
                 </label>
-                <br />
+                
 
                 <label htmlFor='pineapple'>
                     <input
@@ -215,7 +230,7 @@ export default function form() {
                     />
                     Pineapple
                 </label>
-                <br />
+               
 
                 <label htmlFor='peppers'>
                     <input
@@ -227,7 +242,7 @@ export default function form() {
                     />
                     Peppers
                 </label>
-                <br />
+                
 
                 <label htmlFor='echeese'>
                     <input
@@ -239,14 +254,11 @@ export default function form() {
                     />
                     Extra Cheese
                 </label>
-                <br />
-
+                        
                 </div>
-                <br />
-
+                                      
                 <label htmlFor='Special Instructions'>
                     Special Instructions
-                    <br /><br />
                     <textarea
                         name='specInstructions'
                         id='specInstructionsInput'
@@ -254,12 +266,12 @@ export default function form() {
                         value={formState.specInstructions}
                         onChange={inputChange}
                     />
-                    
+                  
                 </label>
-                <br />
-                <button name='submit' onSubmit={sent} disabled={buttonDisabled}>Submit</button>
+                
+                <button name='submit' onSubmit={post} disabled={isButtonDisabled}>Submit</button>
                 <pre>{JSON.stringify(post, null, 2)}</pre>
-            
+               
         </form>
     )
 

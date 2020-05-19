@@ -1,11 +1,11 @@
 import React from 'react';
-import {BrowserRouter, Route, Link} from 'react-router-dom';
+import Form from './components/Form';
 
 function Home() {
     return (
         <div className="home">
             <h1>The Best Pizza Ever</h1>
-
+            <Form />
         </div>
     );
 }
