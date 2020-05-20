@@ -100,7 +100,7 @@ export default function Form() {
            console.log(response.data.size)
             setFormState({
               name: "",
-              size: response.data.size,
+              size: "",
               pepperoni: "",
               beef: "",
               sausage: "",
@@ -151,7 +151,7 @@ export default function Form() {
                     value={formState.name}
                     onChange={inputChange}
                 />
-                {errors.name.length > 0 ? <p className="error">{errors.name}</p> : null}
+                {errors.name.length > 2 ? <p className="error">{errors.name}</p> : null}
                 <br />
             </label>
             <br />
